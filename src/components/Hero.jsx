@@ -94,7 +94,7 @@ const Hero = () => {
       )}
       <div
         id="video-frame"
-        className="relative h-dvh w-screen overflow-x-hidden rounded-s-lg bg-blue-75"
+        className="relative z-10 h-dvh w-screen overflow-x-hidden rounded-s-lg bg-blue-75"
       >
         <div>
           <div
@@ -124,7 +124,7 @@ const Hero = () => {
             muted
             id="next-video"
             className="absolute-center absolute invisible z-20 size-64 object-cover object-center"
-            onLoad={handleVideoLoad}
+            onLoadedData={handleVideoLoad}
           />
 
           <video
