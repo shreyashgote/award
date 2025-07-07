@@ -1,6 +1,42 @@
 import { TiLocationArrow } from "react-icons/ti";
+import { useRef } from "react";
+import { useState } from "react";
 const BentoTilt = ({ children, className = "" }) => {
-  return <div className={className}>{children}</div>;
+  const [transformStyle, settransformStyle] = useState("");
+  const itemRef = useRef();
+
+  const handleMouseMove = (e) => {
+    if (!itemRef.current) return;
+
+    const { left, top, width, height } =
+      itemRef.current.getBoundingClientRect();
+
+    const relativeX = (e.clientX - left) / width;
+    const relativeY = (e.clientY - top) / height;
+
+    const tiltX = (relativeY - 0.5) * 5;
+    const tiltY = (relativeX - 0.5) * -5;
+
+    const newTransform = `perspective(700px) rotateX(${tiltX}deg) 
+    rotateY(${tiltY}deg) scale3d(0.95, 0.95, 0.95)`;
+
+    settransformStyle(newTransform);
+  };
+
+  const handleMouseLive = () => {
+    settransformStyle("");
+  };
+  return (
+    <div
+      className={className}
+      ref={itemRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLive}
+      style={{ transform: transformStyle }}
+    >
+      {children}
+    </div>
+  );
 };
 const BentoCard = ({ src, title, description }) => {
   return (
